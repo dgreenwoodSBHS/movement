@@ -7,6 +7,9 @@
         window.onload = function() {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
+            
+            document.addEventListener('keydown',keyPressed);
+            document.addEventListener('keyup',keyReleased);
 
             setInterval(mainloop, 1000 / 50);
         }
@@ -18,6 +21,16 @@
         var playerXspeed = 5;
         var playerYspeed = 5;
         
+        var leftKeyPressed = false;
+        var rightKeyPressed = false;
+        var upKeyPressed = false;
+        var downKeyPressed = false;
+        
+        const LEFT_KEY = 37;
+        const UP_KEY = 38;
+        const RIGHT_KEY = 39;
+        const DOWN_KEY = 40;
+        
         
         function mainloop() {
             colorRect(0,0,canvas.width,canvas.height,'black'); // bg
@@ -26,9 +39,52 @@
             playerMove();          
         } // end func
         
-        function playerMove(){
-            playerXpos += playerXspeed;
+        function keyPressed(evt){
+            if(evt.keyCode == LEFT_KEY){ //left
+               leftKeyPressed = true;
+            }
+            if(evt.keyCode == RIGHT_KEY){ // right
+               rightKeyPressed = true;
+            }
+            if(evt.keyCode == UP_KEY){ // up
+               upKeyPressed = true;
+            }
+            if(evt.keyCode == DOWN_KEY){ // down
+               downKeyPressed = true;
+            }
         }
+        
+        function keyReleased(evt){
+            if(evt.keyCode == LEFT_KEY){ //left
+               leftKeyPressed = false;
+            }
+            if(evt.keyCode == RIGHT_KEY){ // right
+               rightKeyPressed = false;
+            }
+            if(evt.keyCode == UP_KEY){ // up
+               upKeyPressed = false;
+            }
+            if(evt.keyCode == DOWN_KEY){ // down
+               downKeyPressed = false;
+            }
+        }
+        
+        function playerMove(){
+            if(rightKeyPressed){ // rightKeyPressed true
+                playerXpos += playerXspeed;
+            }
+            if(leftKeyPressed){
+               playerXpos -= playerXspeed;
+            }
+            if(upKeyPressed){
+               playerYpos -= playerYpos;
+            }
+            if(downKeyPressed){
+               playerYpos += playerYpos;
+            }
+            
+            
+        } // end func
         
          function colorRect(x,y,w,h,c){
             canvasContext.fillStyle = c;
